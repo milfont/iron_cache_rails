@@ -34,7 +34,14 @@ module ActionDispatch
 
       def set_session(env, session_id, session, options={})
         with_namespace(session_id, options) do |cache, k|
-          cache.set(k, serialize_entry(session, options), options)
+          
+          if cache.is_a? IronCache::Cache
+            cache.put(k, serialize_entry(session, options), options)
+          else
+            cache.set(k, serialize_entry(session, options), options)
+          end
+          
+          #cache.set(k, serialize_entry(session, options), options)
           #cache.put(k, serialize_entry(session, options), options)
         end
 
