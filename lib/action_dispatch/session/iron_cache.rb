@@ -22,7 +22,8 @@ module ActionDispatch
         session_id ||= generate_sid
 
         with_namespace(session_id, options) do |cache, k|
-          item = cache.get(k)
+          #item = cache.get(k)
+          item = cache.find(k)
           item = item.value unless item.nil?
         end
 
@@ -33,7 +34,8 @@ module ActionDispatch
 
       def set_session(env, session_id, session, options={})
         with_namespace(session_id, options) do |cache, k|
-          cache.put(k, serialize_entry(session, options), options)
+          cache.set(k, serialize_entry(session, options), options)
+          #cache.put(k, serialize_entry(session, options), options)
         end
 
         session_id
