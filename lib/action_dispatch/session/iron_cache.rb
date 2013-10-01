@@ -22,8 +22,8 @@ module ActionDispatch
         session_id ||= generate_sid
 
         with_namespace(session_id, options) do |cache, k|
-          #item = cache.get(k)
-          item = cache.find(k)
+          item = cache.get(k)
+          #item = cache.find(k)
           item = item.value unless item.nil?
         end
 
